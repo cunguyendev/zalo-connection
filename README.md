@@ -15,7 +15,52 @@ Deploy to Netlify: [https://zalo-connection.netlify.app/](https://zalo-connectio
 
 ## Guide
 
-Updating...
+Step by step to add zalo chat plugin into your app
+
+### Crate an Zalo Offcial Account
+
+Go to [Zalo API](https://developers.zalo.me/docs/api/official-account-api-147) to create and get an OAID (Offcial Account ID).
+
+### Create Zalo init file (`zalo.js`)
+
+```javascript
+class ZaloChatPlugin {
+  constructor(oaid) {
+    this.oaid = oaid;
+    this.body = document.querySelector('body');
+  }
+
+  /**
+   * Render zalo chat window with welcome message
+   * @param {string} message
+   */
+  render() {
+    const zaloNode = document.createElement('div');
+
+    zaloNode.setAttribute('class', 'zalo-chat-widget');
+    zaloNode.setAttribute('data-oaid', this.oaid);
+
+    this.body.appendChild(zaloNode);
+  }
+}
+
+export default ZaloChatPlugin;
+```
+
+### Import Zalo init file (`zalo.js`) into your app then launch it
+
+_Note that, you have to pass your OAID when call the constructor_
+
+```javascript
+import ZaloChatPlugin from '../plugins/zalo';
+
+/**
+ * Your oaid (Offcial Account)
+ * Read the document here: https://developers.zalo.me/docs/api/official-account-api-147
+ */
+const zaloChatPlugin = new ZaloChatPlugin('2445522973757062543');
+zaloChatPlugin.render();
+```
 
 ## Getting Started
 
